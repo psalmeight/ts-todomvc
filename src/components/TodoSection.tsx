@@ -55,14 +55,6 @@ function TodoSection() {
     setTodoList(todoListCopy);
   };
 
-  const renderFilter = (filterType: string, idx: number) => {
-    return (
-      <button onClick={() => setState({ ...state, filter: filterType })}>
-        {filterType}
-      </button>
-    );
-  };
-
   const changeValue = (e: any) => {
     setState({
       ...state,
@@ -87,9 +79,19 @@ function TodoSection() {
   };
 
   const onEnter = async (e: any) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && state.currentText !== "") {
       await addToTodoList();
     }
+  };
+
+  const clearCompleted = () => {
+    let todoListCopy: RowData[] = [...todoList];
+
+    let tempCopy = todoListCopy.filter(
+      (todo) => todo.status === TodoStatus.PENDING
+    );
+
+    setTodoList(tempCopy);
   };
 
   const renderTodo = (todo: RowData, idx: number) => {
@@ -109,6 +111,14 @@ function TodoSection() {
           {todo.text}
         </div>
       </div>
+    );
+  };
+
+  const renderFilter = (filterType: string, idx: number) => {
+    return (
+      <button onClick={() => setState({ ...state, filter: filterType })}>
+        {filterType}
+      </button>
     );
   };
 
@@ -142,6 +152,8 @@ function TodoSection() {
       <div className="todo-footer">
         <span>{state?.pendingCount} item left</span>
         {["all", "active", "complete"].map(renderFilter)}
+
+        <button onClick={clearCompleted}>Clear Completed</button>
       </div>
     </div>
   );
