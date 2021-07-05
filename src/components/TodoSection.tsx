@@ -1,7 +1,4 @@
-import { KeyboardEventHandler, useEffect } from "react";
-import { useState } from "react";
-import logo from "./logo.svg";
-
+import { useEffect, useState } from "react";
 interface RowData {
   id: number;
   status: string;
@@ -25,12 +22,7 @@ function TodoSection() {
     currentText: "",
   });
 
-  const [todoList, setTodoList] = useState<RowData[]>([
-    { id: 1, status: "pending", text: "Testing testing", show: true },
-    { id: 2, status: "pending", text: "Testing Second", show: true },
-    { id: 3, status: "pending", text: "Testing Third", show: true },
-    { id: 4, status: "pending", text: "Testing Fourth", show: true },
-  ]);
+  const [todoList, setTodoList] = useState<RowData[]>([]);
 
   useEffect(() => {
     setState({
@@ -132,7 +124,6 @@ function TodoSection() {
         break;
       case FilterTypes.ALL:
         return todo;
-        break;
     }
   };
 
@@ -147,13 +138,23 @@ function TodoSection() {
         value={state.currentText}
       />
 
+      {/* List of todo section */}
       {todoList ? todoList.filter(applyFilter).map(renderTodo) : null}
 
       <div className="todo-footer">
-        <span>{state?.pendingCount} item left</span>
-        {["all", "active", "complete"].map(renderFilter)}
+        {/* List of todo filters */}
+        {todoList.length > 0 ? (
+          <>
+            <span>{state?.pendingCount} item left</span>{" "}
+            <div>{["all", "active", "complete"].map(renderFilter)}</div>
+          </>
+        ) : null}
 
-        <button onClick={clearCompleted}>Clear Completed</button>
+        {/* Clear completed button */}
+        {todoList.filter((todo) => todo.status === TodoStatus.COMPLETE).length >
+        0 ? (
+          <button onClick={clearCompleted}>Clear Completed</button>
+        ) : null}
       </div>
     </div>
   );

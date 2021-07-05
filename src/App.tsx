@@ -1,5 +1,3 @@
-import React from "react";
-import logo from "./logo.svg";
 import TodoSection from "./components/TodoSection";
 
 function App() {
