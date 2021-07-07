@@ -146,14 +146,19 @@ function TodoSection() {
 
   return (
     <div className="todo-container">
-      <input
-        name={"todo-input"}
-        className="todo-input"
-        placeholder="What needs to be done?"
-        onChange={changeValue}
-        onKeyUp={(e) => onEnter(e)}
-        value={state.currentText}
-      />
+      <div>
+        <div className="todo-input">
+          <div className="toggle-icon">❯</div>
+
+          <input
+            name={"todo-input"}
+            placeholder="What needs to be done?"
+            onChange={changeValue}
+            onKeyUp={(e) => onEnter(e)}
+            value={state.currentText}
+          />
+        </div>
+      </div>
 
       {/* List of todo section */}
       {todoList ? todoList.filter(applyFilter).map(renderTodo) : null}
