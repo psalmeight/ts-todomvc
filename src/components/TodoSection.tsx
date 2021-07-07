@@ -116,8 +116,17 @@ function TodoSection() {
   };
 
   const renderFilter = (filterType: string, idx: number) => {
+    let className = "todo-filter-btn";
+
+    if (filterType === state.filter) {
+      className += " todo-filter-btn-selected";
+    }
+
     return (
-      <button onClick={() => setState({ ...state, filter: filterType })}>
+      <button
+        className={className}
+        onClick={() => setState({ ...state, filter: filterType })}
+      >
         {filterType}
       </button>
     );
@@ -152,18 +161,21 @@ function TodoSection() {
 
       <div className="todo-footer">
         {/* List of todo filters */}
-        {todoList.length > 0 ? (
-          <>
-            <span>{state?.pendingCount} item left</span>{" "}
-            <div>{["all", "active", "complete"].map(renderFilter)}</div>
-          </>
-        ) : null}
-
+        <div className="todo-footer-left">
+          <label>{state?.pendingCount} item left</label>
+        </div>
+        <div className="todo-footer-center">
+          {["all", "active", "complete"].map(renderFilter)}
+        </div>
         {/* Clear completed button */}
-        {todoList.filter((todo) => todo.status === TodoStatus.COMPLETE).length >
-        0 ? (
-          <button onClick={clearCompleted}>Clear Completed</button>
-        ) : null}
+        <div className="todo-footer-right">
+          {todoList.filter((todo) => todo.status === TodoStatus.COMPLETE)
+            .length > 0 ? (
+            <button className="todo-clear-btn" onClick={clearCompleted}>
+              Clear Completed
+            </button>
+          ) : null}
+        </div>
       </div>
     </div>
   );
