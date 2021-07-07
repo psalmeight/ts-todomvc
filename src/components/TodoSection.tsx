@@ -3,7 +3,6 @@ interface RowData {
   id: number;
   status: string;
   text: string;
-  show: boolean | true;
 }
 
 interface StateProps {
@@ -12,8 +11,8 @@ interface StateProps {
   currentText: string;
 }
 
-const FilterTypes = { ALL: "all", ACTIVE: "active", COMPLETE: "complete" };
-const TodoStatus = { PENDING: "pending", COMPLETE: "complete" };
+const FilterTypes = { ALL: "all", ACTIVE: "active", COMPLETE: "completed" };
+const TodoStatus = { PENDING: "pending", COMPLETE: "completed" };
 
 function TodoSection() {
   const [state, setState] = useState<StateProps>({
@@ -41,7 +40,6 @@ function TodoSection() {
       id: todoListCopy.length + 1,
       status: TodoStatus.PENDING,
       text: state.currentText,
-      show: true,
     });
 
     setTodoList(todoListCopy);
@@ -88,14 +86,15 @@ function TodoSection() {
 
   const renderTodo = (todo: RowData, idx: number) => {
     return (
-      <div key={`${idx}-cbx`} className="todo-row">
+      <div key={`${idx}-cbx-${todo.id}`} className="todo-row">
         <div className="round">
           <input
             type="checkbox"
-            id="checkbox"
+            id={`checkbox${todo.id}`}
             onChange={(e) => onCheck(e, todo.id)}
+            checked={todo.status === FilterTypes.COMPLETE}
           />
-          <label htmlFor="checkbox"></label>
+          <label htmlFor={`checkbox${todo.id}`}></label>
         </div>
 
         <div
@@ -165,7 +164,7 @@ function TodoSection() {
           <label>{state?.pendingCount} item left</label>
         </div>
         <div className="todo-footer-center">
-          {["all", "active", "complete"].map(renderFilter)}
+          {["all", "active", "completed"].map(renderFilter)}
         </div>
         {/* Clear completed button */}
         <div className="todo-footer-right">
