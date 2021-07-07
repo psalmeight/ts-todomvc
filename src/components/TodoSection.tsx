@@ -89,12 +89,21 @@ function TodoSection() {
   const renderTodo = (todo: RowData, idx: number) => {
     return (
       <div key={`${idx}-cbx`} className="todo-row">
-        <input
-          type="checkbox"
-          onChange={(e) => onCheck(e, todo.id)}
-          checked={todo.status === FilterTypes.COMPLETE}
-        />
+        <div className="round">
+          <input
+            type="checkbox"
+            id="checkbox"
+            onChange={(e) => onCheck(e, todo.id)}
+          />
+          <label htmlFor="checkbox"></label>
+        </div>
+
         <div
+          className={
+            todo.status === TodoStatus.PENDING
+              ? "todo-text"
+              : "todo-text-complete"
+          }
           style={{
             textDecoration:
               todo.status === TodoStatus.COMPLETE ? "line-through" : "none",
