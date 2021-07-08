@@ -24,6 +24,25 @@ function TodoSection() {
   const [todoList, setTodoList] = useState<RowData[]>([]);
 
   useEffect(() => {
+    if (localStorage.getItem("todoList") !== null) {
+      let todoJson = localStorage.getItem("todoList");
+      setTodoList(
+        todoJson !== null
+          ? JSON.parse(localStorage.getItem("todoList") || "")
+          : []
+      );
+
+      let stateJson = localStorage.getItem("currentState");
+
+      setState(
+        stateJson !== null
+          ? JSON.parse(localStorage.getItem("currentState") || "")
+          : {}
+      );
+    }
+  }, []);
+
+  useEffect(() => {
     setState({
       ...state,
       pendingCount: todoList.filter(
@@ -31,7 +50,13 @@ function TodoSection() {
       ).length,
       currentText: "",
     });
+
+    localStorage.setItem("todoList", JSON.stringify(todoList));
   }, [todoList]);
+
+  useEffect(() => {
+    localStorage.setItem("currentState", JSON.stringify(state));
+  }, [state]);
 
   const addToTodoList = () => {
     let todoListCopy: RowData[] = [...todoList];
