@@ -148,7 +148,15 @@ function TodoSection() {
     <div className="todo-container">
       <div>
         <div className="todo-input">
-          <div className="toggle-icon">❯</div>
+          <div
+            className={
+              state.pendingCount == 0
+                ? "toggle-icon toggle-icon-active"
+                : "toggle-icon"
+            }
+          >
+            {todoList.length > 0 ? "❯" : null}
+          </div>
 
           <input
             name={"todo-input"}
@@ -163,24 +171,26 @@ function TodoSection() {
       {/* List of todo section */}
       {todoList ? todoList.filter(applyFilter).map(renderTodo) : null}
 
-      <div className="todo-footer">
-        {/* List of todo filters */}
-        <div className="todo-footer-left">
-          <label>{state?.pendingCount} item left</label>
+      {todoList.length > 0 ? (
+        <div className="todo-footer">
+          {/* List of todo filters */}
+          <div className="todo-footer-left">
+            <label>{state?.pendingCount} item left</label>
+          </div>
+          <div className="todo-footer-center">
+            {["all", "active", "completed"].map(renderFilter)}
+          </div>
+          {/* Clear completed button */}
+          <div className="todo-footer-right">
+            {todoList.filter((todo) => todo.status === TodoStatus.COMPLETE)
+              .length > 0 ? (
+              <button className="todo-clear-btn" onClick={clearCompleted}>
+                Clear Completed
+              </button>
+            ) : null}
+          </div>
         </div>
-        <div className="todo-footer-center">
-          {["all", "active", "completed"].map(renderFilter)}
-        </div>
-        {/* Clear completed button */}
-        <div className="todo-footer-right">
-          {todoList.filter((todo) => todo.status === TodoStatus.COMPLETE)
-            .length > 0 ? (
-            <button className="todo-clear-btn" onClick={clearCompleted}>
-              Clear Completed
-            </button>
-          ) : null}
-        </div>
-      </div>
+      ) : null}
     </div>
   );
 }
