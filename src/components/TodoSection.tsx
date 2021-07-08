@@ -68,6 +68,18 @@ function TodoSection() {
     setTodoList(tempCopy);
   };
 
+  const onDelete = (id: number) => {
+    let todoListCopy: RowData[] = [];
+
+    todoList.forEach((todo) => {
+      if (todo.id !== id) {
+        todoListCopy.push(todo);
+      }
+    });
+
+    setTodoList(todoListCopy);
+  };
+
   const onEnter = async (e: any) => {
     if (e.key === "Enter" && state.currentText !== "") {
       await addToTodoList();
@@ -110,6 +122,9 @@ function TodoSection() {
         >
           {todo.text}
         </div>
+        <button className="toggle-remove" onClick={() => onDelete(todo.id)}>
+          ×
+        </button>
       </div>
     );
   };
