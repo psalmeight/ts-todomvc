@@ -92,9 +92,11 @@ h1 {
   width: 47px;
   height: 34px;
   font-size: 22px;
+  transform: rotate(90deg);
   -webkit-transform: rotate(90deg);
   color: #e6e6e6;
   margin-top: 1px;
+  cursor: pointer;
 }
 
 .toggle-icon-active {
@@ -221,8 +223,6 @@ h1 {
 .round input[type="checkbox"]:checked + label {
   background-color: #fff;
   border-color: #ccc;
-
-  /*background-image: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23bddad5%22%20stroke-width%3D%223%22/%3E%3Cpath%20fill%3D%22%235dc2af%22%20d%3D%22M72%2025L42%2071%2027%2056l-4%204%2020%2020%2034-52z%22/%3E%3C/svg%3E");*/
 }
 
 .round input[type="checkbox"]:checked + label:after {
@@ -272,6 +272,10 @@ h1 {
   align-items: center;
   text-align: center;
   text-transform: capitalize;
+}
+
+.todo-footer-center button {
+  cursor: pointer;
 }
 
 .todo-footer-right {
